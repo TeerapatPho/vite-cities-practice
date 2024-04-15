@@ -13,11 +13,13 @@
             <div class="row">
               <div class="col-sm-6 col-md-4" v-for="(city, key) in cities" :key='key'>
                 <div class="thumbnail">
-                  <img :src="`../assets/${city.image}`" width=80%>
+                  <img :src="`./src/assets/${city.image}`" width=80%>
                   <div class="caption">
                     <p><b>{{ city.name }}</b></p>
                     <p class="citydetail">{{ city.detail }}</p>
-                    <button class="btn btn-success" role="button">Detail</button>
+                    <router-link :to="{ path: 'info', name: 'Info', params:{city: city.name} }">
+                      <button class="btn btn-success" role="button">Detail</button>
+                    </router-link>
                   </div>
                 </div>
               </div>
