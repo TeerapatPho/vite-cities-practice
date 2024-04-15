@@ -4,17 +4,19 @@
     <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-md-offset-3" />
     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-md-offset-3">
 
-      <input type="email" class="form-control" placeholder="email">
+      <input type="email" class="form-control" placeholder="email" v-model="formData.email">
       <br>
-      <input type="password" class="form-control" placeholder="password">
+      <input type="password" class="form-control" placeholder="password" v-model="formData.password">
       <br>
-      <button class="btn btn-success btn-block full-width">Signin</button>
+      <button class="btn btn-success btn-block full-width" @click="signIn">Signin</button>
     </div>
 
   </div>
 </template>
 
 <script>
+import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth"
+
 export default {
   name: 'SignIn',
   data() {
@@ -27,7 +29,20 @@ export default {
   },
   methods: {
     signIn() {
-      console.log('Signin')
+      const auth = getAuth()
+      signInWithEmailAndPassword(
+        auth,
+        this.formData.email,
+        this.formData.password
+      )
+        .then((userCredential) => {
+          console.log('Successfully signed in!')
+          console.log(auth.currentUser)
+          this.$router.replace('/cities')
+        })
+        .catch((error) => {
+          alert(error.code + '\n' + error.message)
+        })
     }
   }
 }

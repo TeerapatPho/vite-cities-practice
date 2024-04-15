@@ -9,14 +9,28 @@ const routerHistory = createWebHistory()
 
 const routes = [
   {
+    path: '/',
+    redirect: '/signin'
+  },
+  {
+    path: '/catchAll(.*)',
+    redirect: '/signin'
+  },
+  {
     path: '/cities',
     name: 'CityList',
-    component: CityList
+    component: CityList,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/info/:city',
     name: 'Info',
-    component: Info
+    component: Info,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/signin',
