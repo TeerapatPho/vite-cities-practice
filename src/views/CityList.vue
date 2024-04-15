@@ -29,7 +29,8 @@
     </div>
     <div class="row">
       <div class="container">
-        <button class="btn btn-default"><span class="glyphicon glyphicon-log-out"></span> Logout</button>
+        <button class="btn btn-default"><span class="glyphicon glyphicon-log-out" @click="logout"></span>
+          Logout</button>
       </div>
     </div>
     <br>
@@ -57,7 +58,7 @@ export default {
     console.log('City List')
 
     onAuthStateChanged(this.auth, (user) => {
-      if(user) {
+      if (user) {
         this.isLoggedIn = true
       } else {
         this.isLoggedIn = false
@@ -74,6 +75,12 @@ export default {
   methods: {
     logout() {
       console.log('logout')
+      signOut(this.auth)
+        .then(() => {
+          this.$router.replace("/signin")
+        }).catch((error) => {
+          alert(error.message)
+        })
     }
   }
 }
